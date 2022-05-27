@@ -5,6 +5,7 @@ const rl = readline.createInterface({
 });
 
 let secretNumber;
+let numAttempts;
 
 function randomInRange(min, max) {
   secretNumber = Math.floor(Math.random() * (max - min + 1) + min);
@@ -30,8 +31,21 @@ function askGuess() {
       rl.close();
       console.log("You win!");
     } else {
-      askGuess();
+      numAttempts--;
+      if (numAttempts > 0) {
+        askGuess();
+      } else {
+        rl.close();
+        console.log("You lose.");
+      }
     }
+  });
+}
+
+function askLimit() {
+  rl.question("How many attempts would you like? ", (attempts) => {
+    numAttempts = attempts;
+    askRange();
   });
 }
 
@@ -44,4 +58,4 @@ function askRange() {
   });
 }
 
-askRange();
+askLimit();
